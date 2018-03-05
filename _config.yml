@@ -11,11 +11,77 @@ author: milkfr
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
 language: zh-Hans
 date_format: '%Y-%m-%d'
+<<<<<<< HEAD
 reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
 wechatpay: /path/to/wechat-reward-image
 alipay: /path/to/alipay-reward-image
 # Specify the date when the site was setup
 since: 2018
+=======
+
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com' and baseurl as '/child'
+url:
+baseurl:
+permalink: pretty
+
+# Pagination
+paginate: 10
+#paginate_path: "/page:num/"
+#archive:
+  #paginate: 10
+  #paginate_path: "/page:num/"
+#category:
+  #paginate: 10
+  #paginate_path: "/page:num/"
+#tag:
+  #paginate: 10
+  #paginate_path: "/page:num/"
+
+# Handling Reading
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "Gemfile", "Gemfile.lock", "README_en.md"]
+
+# Separator
+#excerpt_separator: <!-- more -->
+
+# Code Highlighter
+## 'pygments' is unsupported on GitHub Pages now.
+highlighter: rouge
+
+#### Markdown Processors
+## 'redcarpet' is unsupported on GitHub Pages now.
+markdown: kramdown
+kramdown:
+    input: GFM
+
+# Default Attributes
+## Docs: https://jekyllrb.com/docs/configuration/#front-matter-defaults
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      comments: true
+
+# Atom feed
+feed:
+  path: atom.xml
+
+# Plugins
+## Docs: https://help.github.com/articles/configuring-jekyll-plugins/
+plugins:
+# jemoji conficts with toc in some no-ascii post
+# - jemoji
+ - jekyll-sitemap
+ - jekyll-feed
+
+# ---------------------------------------------------------------
+# Site Information Settings
+# ---------------------------------------------------------------
+
+>>>>>>> parent of 42afb18... test
 # Put your favicon.ico into `assets/` directory.
 favicon: /assets/favicon.ico
 # Set default keywords (Use a comma to separate)
@@ -83,10 +149,13 @@ scheme: Mist
 # Social Links
 # Key is the link label showing to end users.
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
-social:
+#social:
   #LinkLabel: Link
+<<<<<<< HEAD
   GitHub: https://github.com/milkfr
   Douban: https://www.douban.com/
+=======
+>>>>>>> parent of 42afb18... test
 
 
 # Social Links Icons
@@ -126,8 +195,8 @@ toc:
 
 sidebar:
   # Sidebar Position, available value: left | right
-  #position: left
-  position: right
+  position: left
+  #position: right
 
   # Sidebar Display, available value:
   #  - post    expand on posts automatically. Default.
@@ -155,6 +224,7 @@ sidebar:
 #links_layout: block
 #links_layout: inline
 #links:
+<<<<<<< HEAD
 # title
 # links_title: Links
 # links:
@@ -222,6 +292,9 @@ plugins:
 # ---------------------------------------------------------------
 # SEO Settings
 # ---------------------------------------------------------------
+=======
+  #Title: http://example.com/
+>>>>>>> parent of 42afb18... test
 
 # Canonical, set a canonical link tag in your jekyll, you could use it for your SEO of blog.
 # See: https://support.google.com/webmasters/answer/139066
@@ -534,7 +607,7 @@ algolia_search:
 
 # Local search
 local_search:
-  enable: true
+  enable: false
   # if auto, trigger search by changing input
   # if manual, trigger search by pressing enter key or search button
   trigger: auto
