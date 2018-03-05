@@ -156,9 +156,9 @@ sidebar:
 #links:
 links_title: Links
 links:
-  Github: https://github.com/milkfr
+  G: https://www.baidu.com
 
-  
+
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com' and baseurl as '/child'
 url:
@@ -216,7 +216,7 @@ plugins:
 # - jemoji
  - jekyll-sitemap
  - jekyll-feed
- 
+
 # ---------------------------------------------------------------
 # SEO Settings
 # ---------------------------------------------------------------
@@ -278,7 +278,7 @@ font:
     external: true
     family:
     size:
- 
+
  # ---------------------------------------------------------------
 # Post Settings
 # ---------------------------------------------------------------
@@ -336,7 +336,7 @@ post_copyright:
 custom_logo:
   enabled: false
   image
- 
+
  # ---------------------------------------------------------------
 # Third Party Services Settings
 # ---------------------------------------------------------------
