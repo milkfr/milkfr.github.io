@@ -86,6 +86,7 @@ scheme: Mist
 social:
   #LinkLabel: Link
   GitHub: https://github.com/milkfr
+  Douban: https://www.douban.com/
 
 
 # Social Links Icons
@@ -155,11 +156,9 @@ sidebar:
 #links_layout: inline
 #links:
 # title
-links_title: Links
-links:
-  Title: http://example.com/
-  MacTalk: http://macshuo.com/
-  douban: https://www.douban.com/
+# links_title: Links
+# links:
+  # Title: http://example.com/
 
 
 # URL
