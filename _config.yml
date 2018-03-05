@@ -154,9 +154,12 @@ sidebar:
 #links_layout: block
 #links_layout: inline
 #links:
+# title
 links_title: Links
 links:
-  G: https://www.baidu.com
+  Title: http://example.com/
+  MacTalk: http://macshuo.com/
+  douban: https://www.douban.com/
 
 
 # URL
