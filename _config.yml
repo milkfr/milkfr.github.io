@@ -12,8 +12,8 @@ author: milkfr
 language: zh-Hans
 date_format: '%Y-%m-%d'
 reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
-wechatpay: /path/to/wechat-reward-image
-alipay: /path/to/alipay-reward-image
+wechatpay: /assets/images/wechatpay.jpg
+alipay: /assets/images/alipay.jpg
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com' and baseurl as '/child'
 url:
