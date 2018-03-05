@@ -5,8 +5,8 @@
 
 # Site
 title: milkfr
-subtitle:
-description:
+subtitle: milkfr's blog
+description: ...
 author: milkfr
 # Support language: de, en, fr-FR, id, ja, ko, pt-BR, pt, ru, zh-Hans, zh-hk, zh-tw
 language: zh-Hans
@@ -14,105 +14,20 @@ date_format: '%Y-%m-%d'
 reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
 wechatpay: /path/to/wechat-reward-image
 alipay: /path/to/alipay-reward-image
+# Specify the date when the site was setup
 since: 2018
-
-# URL
-## If your site is put in a subdirectory, set url as 'http://yoursite.com' and baseurl as '/child'
-url:
-baseurl:
-permalink: pretty
-
-# Pagination
-paginate: 10
-#paginate_path: "/page:num/"
-#archive:
-  #paginate: 10
-  #paginate_path: "/page:num/"
-#category:
-  #paginate: 10
-  #paginate_path: "/page:num/"
-#tag:
-  #paginate: 10
-  #paginate_path: "/page:num/"
-
-# Handling Reading
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "Gemfile", "Gemfile.lock", "README_en.md"]
-
-# Separator
-#excerpt_separator: <!-- more -->
-
-# Code Highlighter
-## 'pygments' is unsupported on GitHub Pages now.
-highlighter: rouge
-
-#### Markdown Processors
-## 'redcarpet' is unsupported on GitHub Pages now.
-markdown: kramdown
-kramdown:
-    input: GFM
-
-# Default Attributes
-## Docs: https://jekyllrb.com/docs/configuration/#front-matter-defaults
-defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-      comments: true
-
-# Atom feed
-feed:
-  path: atom.xml
-
-# Plugins
-## Docs: https://help.github.com/articles/configuring-jekyll-plugins/
-plugins:
-# jemoji conficts with toc in some no-ascii post
-# - jemoji
- - jekyll-sitemap
- - jekyll-feed
-
-# ---------------------------------------------------------------
-# Site Information Settings
-# ---------------------------------------------------------------
-
 # Put your favicon.ico into `assets/` directory.
 favicon: /assets/favicon.ico
-
 # Set default keywords (Use a comma to separate)
 keywords: "milkfr"
-
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link.
 # Set rss to specific value if you have burned your feed already.
-rss:
-
-# Specify the date when the site was setup
-#since: 2015
-
+rss
 # icon between year and author @Footer
 authoricon: copyright
-
 # Footer `powered-by` and `theme-info` copyright
 copyright: true
-
-# ---------------------------------------------------------------
-# SEO Settings
-# ---------------------------------------------------------------
-
-# Canonical, set a canonical link tag in your jekyll, you could use it for your SEO of blog.
-# See: https://support.google.com/webmasters/answer/139066
-# Tips: Before you open this tag, remember set up your URL in _config.yml ( ex. url: http://yourdomain.com )
-canonical: true
-
-# Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
-seo: false
-
-# If true, will add site-subtitle to index page, added in jekyll config.
-# subtitle: Subtitle
-index_with_subtitle: false
 
 # ---------------------------------------------------------------
 # Menu Settings
@@ -145,9 +60,11 @@ menu_icons:
   archives: archive
   sitemap: sitemap
   commonweal: heartbeat
-
-
-
+# Code Highlight theme
+# Available value:
+#    normal | night | night eighties | night blue | night bright
+# https://github.com/chriskempson/tomorrow-theme
+highlight_theme: normal
 
 # ---------------------------------------------------------------
 # Scheme Settings
@@ -157,56 +74,6 @@ menu_icons:
 #scheme: Muse
 scheme: Mist
 #scheme: Pisces
-
-
-# ---------------------------------------------------------------
-# Font Settings
-# - Find fonts on Google Fonts (https://www.google.com/fonts)
-# - All fonts set here will have the following styles:
-#     light, light italic, normal, normal italic, bold, bold italic
-# - Be aware that setting too much fonts will cause site running slowly
-# - Introduce in 5.0.1
-# ---------------------------------------------------------------
-font:
-  enable: true
-
-  # Uri of fonts host. E.g. //fonts.googleapis.com (Default)
-  host:
-
-  # Global font settings used on <body> element.
-  global:
-    # external: true will load this font family from host.
-    external: true
-    family: Lato
-
-  # Font settings for Headlines (h1, h2, h3, h4, h5, h6)
-  # Fallback to `global` font settings.
-  headings:
-    external: true
-    family:
-
-  # Font settings for posts
-  # Fallback to `global` font settings.
-  posts:
-    external: true
-    family:
-
-  # Font settings for Logo
-  # Fallback to `global` font settings.
-  # The `size` option use `px` as unit
-  logo:
-    external: true
-    family:
-    size:
-
-  # Font settings for <code> and code blocks.
-  codes:
-    external: true
-    family:
-    size:
-
-
-
 
 # ---------------------------------------------------------------
 # Sidebar Settings
@@ -289,12 +156,130 @@ sidebar:
 #links:
 links_title: Links
 links:
-  MacTalk: http://macshuo.com/
-  Title: http://example.com/
-  #Title: http://example.com/
+  Github: https://github.com/milkfr
 
+  
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com' and baseurl as '/child'
+url:
+baseurl:
+permalink: pretty
+
+# Pagination
+paginate: 10
+#paginate_path: "/page:num/"
+#archive:
+  #paginate: 10
+  #paginate_path: "/page:num/"
+#category:
+  #paginate: 10
+  #paginate_path: "/page:num/"
+#tag:
+  #paginate: 10
+  #paginate_path: "/page:num/"
+
+# Handling Reading
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "Gemfile", "Gemfile.lock", "README_en.md"]
+
+# Separator
+#excerpt_separator: <!-- more -->
+
+# Code Highlighter
+## 'pygments' is unsupported on GitHub Pages now.
+highlighter: rouge
+
+#### Markdown Processors
+## 'redcarpet' is unsupported on GitHub Pages now.
+markdown: kramdown
+kramdown:
+    input: GFM
+
+# Default Attributes
+## Docs: https://jekyllrb.com/docs/configuration/#front-matter-defaults
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      comments: true
+
+# Atom feed
+feed:
+  path: atom.xml
+
+# Plugins
+## Docs: https://help.github.com/articles/configuring-jekyll-plugins/
+plugins:
+# jemoji conficts with toc in some no-ascii post
+# - jemoji
+ - jekyll-sitemap
+ - jekyll-feed
+ 
+# ---------------------------------------------------------------
+# SEO Settings
+# ---------------------------------------------------------------
+
+# Canonical, set a canonical link tag in your jekyll, you could use it for your SEO of blog.
+# See: https://support.google.com/webmasters/answer/139066
+# Tips: Before you open this tag, remember set up your URL in _config.yml ( ex. url: http://yourdomain.com )
+canonical: true
+
+# Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
+seo: false
+
+# If true, will add site-subtitle to index page, added in jekyll config.
+# subtitle: Subtitle
+index_with_subtitle: false
 
 # ---------------------------------------------------------------
+# Font Settings
+# - Find fonts on Google Fonts (https://www.google.com/fonts)
+# - All fonts set here will have the following styles:
+#     light, light italic, normal, normal italic, bold, bold italic
+# - Be aware that setting too much fonts will cause site running slowly
+# - Introduce in 5.0.1
+# ---------------------------------------------------------------
+font:
+  enable: true
+
+  # Uri of fonts host. E.g. //fonts.googleapis.com (Default)
+  host:
+
+  # Global font settings used on <body> element.
+  global:
+    # external: true will load this font family from host.
+    external: true
+    family: Lato
+
+  # Font settings for Headlines (h1, h2, h3, h4, h5, h6)
+  # Fallback to `global` font settings.
+  headings:
+    external: true
+    family:
+
+  # Font settings for posts
+  # Fallback to `global` font settings.
+  posts:
+    external: true
+    family:
+
+  # Font settings for Logo
+  # Fallback to `global` font settings.
+  # The `size` option use `px` as unit
+  logo:
+    external: true
+    family:
+    size:
+
+  # Font settings for <code> and code blocks.
+  codes:
+    external: true
+    family:
+    size:
+ 
+ # ---------------------------------------------------------------
 # Post Settings
 # ---------------------------------------------------------------
 
@@ -339,8 +324,6 @@ post_copyright:
   license: CC BY-NC-SA 3.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/
 
-
-
 # ---------------------------------------------------------------
 # Misc Theme Settings
 # ---------------------------------------------------------------
@@ -352,17 +335,9 @@ post_copyright:
 #   image: url-of-image   - Images's url
 custom_logo:
   enabled: false
-  image:
-
-
-# Code Highlight theme
-# Available value:
-#    normal | night | night eighties | night blue | night bright
-# https://github.com/chriskempson/tomorrow-theme
-highlight_theme: normal
-
-
-# ---------------------------------------------------------------
+  image
+ 
+ # ---------------------------------------------------------------
 # Third Party Services Settings
 # ---------------------------------------------------------------
 
