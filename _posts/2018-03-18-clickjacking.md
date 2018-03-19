@@ -16,16 +16,22 @@ a Study of Clickjacking Vulnerabilities on Popular Sites》](http://seclab.stanf
 ### 0x01漏洞简介
 点击劫持是一种视觉上的欺骗手动，攻击者可以使用一个透明的、不可见的iframe，覆盖在一个网页上，然后诱使用户在该网页上进行操作，通过调整iframe页面的位置，可以诱使用户恰好点击在iframe页面的一些功能性按钮上和一些操作。
 
-之所以叫点击劫持（Clickjacking），是因为它劫持了用户的Web sessions  cookie，并诱导了点击等页面操作
+之所以叫点击劫持（Clickjacking），是因为它劫持了用户的登录态，并诱导了点击等页面操作
 
 作为一个前端漏洞，它相对与XSS和CSRF来说，因为需要诱使用户与页面产生交互行为，因此实施攻击的成本更高，在网络犯罪中比较少见，但仍然可能被利用在钓鱼、欺诈和广告作弊等方面
 
 #### 做个实验、举个例子
 我们修改hosts文件，使一台远程主机被解析为`example.com`，本机被解析为`hacker.com`，注意一些浏览器的有DNS缓存，注意清除
 
-我们在远程主机上运行`python3 -m http.server 80`，开启一个简单http服务应用，因为没有index页面，所以当我们访问时会出现如下一个文件下载目录页面，页面中只有一个文件链接，我们把它看成付钱功能的按钮
+我们在远程主机上运行开启一个简单http服务应用，当我们访问时会出现如下一个文件下载目录页面，页面中只有一个文件链接，我们把它看成付钱功能的按钮
 
 ![1](https://milkfr.github.io/assets/images/posts/2018-03-18-clickjacking/1.png)
+
+我们为这个页面设置cookie
+```
+resp.set_cookie('session-cookie', '123')
+resp.set_cookie('third-part-cookie', '456', expires='Sun, 18-Mar-2019 10:05:05 GMT')
+```
 
 之后，我们在本机随意开启一个Web应用，返回一个HTML页面，页面代码如下，它将`example.com`放在一个`iframe`标签内，将iframe页面虚化透明，在iframe页面下层放置一个不透明的按钮，正好重叠在虚化透明的付钱按钮背后
 
@@ -69,11 +75,17 @@ a Study of Clickjacking Vulnerabilities on Popular Sites》](http://seclab.stanf
 
 ![2](https://milkfr.github.io/assets/images/posts/2018-03-18-clickjacking/2.png)
 
-页面可以完全虚化透明至看不见，如果hacker.com的页面精美一些，可以更好诱导点击操作，甚至可以做个小游戏，在用户存在登录态的情况下，便可以使用用户的web sessions cookies在用户不知情的情况下，利用与用户产生交互的页面，诱使他们完成一些动作，一步或者多步操作
+点击后会发送请求到`example.com`，并带上`example.com`的cookies，也就是劫持了用户的身份
+
+![5](https://milkfr.github.io/assets/images/posts/2018-03-18-clickjacking/5.png)
+
+一般我们把cookies分为session cookie（临时cookie，断开连接后消失）和third-part cookie（本地存储的cookie，expires会设置过期时间，浏览器会本地保存到过期），如上分别使用了这两种类型的cookie。某些版本的浏览器（IE7、IE8）出于安全考虑对iframe之类的标签不发送third-part cookie，目前主流浏览器包括IE高版本都会发送，所以基本只要带有cookie都能劫持
+
+页面可以完全虚化透明至看不见，如果hacker.com的页面精美一些，可以更好诱导点击操作，甚至可以做个小游戏，在用户存在登录态的情况下，便可以使用用户的登录态在用户不知情的情况下，利用与用户产生交互的页面，诱使他们完成一些动作，一步或者多步操作
 
 ### 0x02 威胁场景
-事实上我们说点击劫持是劫持了用户的Web session cookie，而且实际上这是一种视觉攻击，因此也会有一些视觉效果上的攻击变种和配合
-* 利用与用户产生交互的页面，在用户不知情情况下诱使用户完成一些操作
+事实上我们虽然说点击劫持是劫持了用户的登录态，但实际上这是一种视觉攻击，因此也会有一些视觉效果上的攻击变种和配合
+* 诱使用户登录站点，发送其他含有iframe的链接给用户，在用户不知情情况下诱使用户完成一些操作
 * 通过类似flash游戏改变用户鼠标点击的位置，完成一些较为复杂的操作
 * 搭配输入框填写表单
 * 图片覆盖攻击(Cross Site Image Overlaying, XSIO)，覆盖原有站点的图片，诱骗用户点进钓鱼网站，这里原本原网站处于点击按钮前面，而想办法跳转到钓鱼站点则是将原网站处于点击按钮后方，然而实际上这种方式用处并不大，因为钓鱼有很多其他更方便的方法。防御XSIO时，需要检查用户提交的HTML代码中，<img>标签的style属性是否可能导致浮出`(style="position:absolute;left: 123px; top:123px;")`，但其实没有什么意义，可以不管
@@ -121,7 +133,10 @@ if (top.location != location) {
 ```
 
 #### 多因素认证
-在重要功能按钮点击前加入多因素认证，如付款的二次密码或者某些隐私问题等。这种方式算很有效，但较麻烦，不重要的问题使用也会变复杂。
+在重要功能按钮点击前加入多因素认证，如付款的二次密码或者某些隐私问题等。这种方式算很有效，但较麻烦，不重要的问题使用也会变复杂
+
+#### 不以cookie作为登录态
+不推荐，cookie机制还是比较安全可靠的，自定义HTTP头部或者其他方式需要开发本身了解其他方面安全机制和浏览器策略来确保安全，没有必要
 
 #### CSP策略
 FireFox有“CSP”策略，但是不是所有浏览器支持，不推荐使用，以后若普及可以使用
@@ -217,7 +232,7 @@ if (filter(top.location)) {
 * IE8和Chrome引入了XSS过滤器，我们在可以写一段恶意代码，利用浏览器XSS过滤器的匹配规则，禁用iframe标签页面里的JS代码或者禁用部分代码，这段恶意代码的构造就比较复杂，需要研究者专门针对性测试
 * OnBeforeUnload-204冲刷，很多浏览器（IE7、IE8、Chrome、FireFox）可以让一个攻击者通过修改onBeforeUnload来重复提交location到204页面，不断冲刷会取消原始locaiton请求，和之前OnBeforeUnload差不多，但不需要和用户交互
 * IE对iframe有一个`security='restricted'`属性，Chrome对iframe有一个`sandbox`属性，这些可以用来禁用被嵌套页面的JS，导致防御代码无效，但IE的这个属性也无法传送Cookie，也就失去了点击劫持的意义，Chrome仍然可以传送Cookie
-* IE和FireFox实现的document.designMode可以在框架页面中被开启，会禁用JS，可以传送Cookie
+* IE和FireFox实现的`document.designMode`可以在框架页面中被开启，会禁用JS，可以传送Cookie
 
 #### 禁用JS
 不管怎么用JS防御，被浏览器或者用户使用插件禁用JS就没有作用了
