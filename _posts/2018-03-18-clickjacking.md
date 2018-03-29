@@ -93,31 +93,43 @@ resp.set_cookie('third-part-cookie', '456', expires='Sun, 18-Mar-2019 10:05:05 G
 * 手机触屏上的点击劫持，劫持用户触屏操作，而且手机为了节约屏幕空间，经常隐藏地址栏，更容易造成视觉欺骗
 
 ### 0x03 修复方式
-首先要明确业务是否真的需要`iframe`嵌套，如无必要，不要使用，如要使用，最好同源。推荐以下方式中X-Frame-Options和JS防御结合
+首先要明确业务是否真的需要`iframe`嵌套，如无必要，不要使用，如要使用，最好同源。推荐以下方式中在使用HTTPS的情况用CSP策略的frame-ancestors属性、X的frame-Frame-Options进行防御，否则用CSP策略的frame-ancestors属性、X-Frame-Options和JS防御结合
 
-#### HTTP头部的X-Frame-Options标签
-比较推荐这种修复方式，主流浏览器基本支持这个头部标签，可以在[MDN文档](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)上找到浏览器的支持情况
+#### 必须要使用的情况
+如果需要一个站点可以被任意站点嵌套，则使用`window.confirm()`进行保护
 
-最推荐的方式：在HTTP头部上加上`X-Frame-Options：DENY`头部
+`window.confirm()`会显示一个不会被嵌套的弹框，并在弹框上显示发起弹框的域名，提醒用户或者说明页面是被嵌套的交给用户判断，注意IE浏览器不现实域名，但没有什么其他方法让所有浏览器支持
 
-其次推荐：在HTTP头部上加上`X-Frame-Options：SAMEORIGIN`头部，这时，站点间安全性就是同源站点页面中安全性最弱的页面了，如果某个页面可以被篡改，就失去了防御的意义
+#### HTTP返回包Header添加属性进行防御
+* CSP策略的frame-ancestors属性和X-Frame-Options可以防御，非HTTPS情况下可能被一些proxies去掉头部，需要了解
+* 可以在[MDN文档](https://developer.mozilla.org/)或者[caniuse](https://caniuse.com)文档上找到相应的浏览器支持情况，判断选择使用
+* 不同浏览器支持情况不同，两个头部都存在时，有的浏览器会忽略X-Frame-Options，有的则会忽略CSP的frame-ancestors，所以两个头部添加要语义保持一致
+* 另外，注意当页面可以被同源页面或者其他页面嵌套时，站点间安全性就是可嵌套站点页面中安全性最弱的页面了，如果某个页面可以被篡改，就失去了防御的意义
+* CSP策略的frame-ancestors
+    * `Content-Security-Policy: frame-ancestors 'none'`; 不能被嵌套
+    * `Content-Security-Policy: frame-ancestors 'self'`; 只能被本站点嵌套
+    * `Content-Security-Policy: frame-ancestors 'self' '*.somesite.com' 'https://friend.site.com'`; 后面制定可以被嵌套的站点的域名协议端口等信息，需要了解一下CSP的规则
+* X-Frame-Options
+    * `X-Frame-Options：DENY`; 不允许被嵌套
+    * `X-Frame-Options：SAMEORIGIN`; 可以被同源站点嵌套
+    * `X-Frame-Options: ALLOW-FROM uri`; 指定可以被嵌套的页面，这个头部属性目前还不被Chrome等一些浏览器支持，若是用户群体大而非内部使用的，不推荐使用
 
-最后，`X-Frame-Options: ALLOW-FROM uri`这个头部目前还不被Chrome支持，若是用户群体大而非内部使用的，不推荐使用
 
 #### JS防御
-用JS判断当前页面是否被其他页面嵌套，如果是，跳转到自己的域名下
+用JS判断当前页面是否被其他页面嵌套，如果是，跳转到自己的域名下，无论如何，JS可能会被用户禁用，不建议单独使用，如果要指定被嵌套的页面需要真确的匹配方式
 
 建议代码，目前没有绕过方式，暂时比较安全，首先隐藏页面，当确认没有被iframe包裹时显示，否则重定向
 
 ```
-<style>
-    body {display: none;}
+<style id="antiClickjack">
+    body {display: none !important;}
 </style>
 
 <!-- 此段JS放在body加载完成后 -->
 <script>
 if (self == top) {
-    document.getElementsByTagName("body")[0].style.display = 'block';
+    var antiClickjack = document.getElementById("antiClickjack");
+    antiClickjack.parentNode.removeChild(antiClickjack);
 } else {
     top.location = self.location;
 }
@@ -137,9 +149,6 @@ if (top.location != location) {
 
 #### 不以cookie作为登录态
 不推荐，cookie机制还是比较安全可靠的，自定义HTTP头部或者其他方式需要开发本身了解其他方面安全机制和浏览器策略来确保安全，没有必要
-
-#### CSP策略
-FireFox有“CSP”策略，但是不是所有浏览器支持，不推荐使用，以后若普及可以使用
 
 ### 0x04 深入攻防
 前面说到JS防御点击劫持的方式，事实上，点击劫持刚被提出时，几乎没有站点做了防御，之后有很多站点使用JS的方式防御，但是JS的防御代码存在被绕过的可能性，前面提到的斯坦福大学的论文就详细说明了绕过的各种方式。事实上，经过笔者测试，论文里提到的很多方法在现在最新的版本的浏览Chrome和IE上都无法重现了，浏览器可能已经针对性地修复了一些问题，但用户有可能仍然使用低版本浏览器，仍然要注意这些问题
@@ -265,9 +274,9 @@ scrollTo function动态移动frame到中心，清除了点击会跳转的div，�
 
 精巧如facebook的代码仍然被绕过，再回头看我们推荐的防御方式
 
-X-Frame-Options头部存在以下问题
+HTTP头部指定属性存在以下问题
 * 改策略需要为每个页面指定，这可能会使部署复杂化，可以在一些重要页面部署，比如支付和登录，当然，框架或Web容器部署则无问题
-* 代理在添加和删除头部方面是臭名昭著的，可能会去掉头部X-Frame-Options导致不能防护，就像通信通信给HTTP页面嵌广告，HTTPS则无问题
+* 代理在添加和删除头部方面是臭名昭著的，可能会去掉头部导致不能防护，就像通信通信给HTTP页面嵌广告，HTTPS则无问题
 
 JS的防御代码：我们上面推荐的JS防御代码只是已知还未存在绕过方式的代码，特点如下
 * 页面加载时，样式表会隐藏页面上所有内容，禁用js，页面保持为空
@@ -287,3 +296,5 @@ JS的防御代码：我们上面推荐的JS防御代码只是已知还未存在�
 
 [《Busting Frame Busting:
 a Study of Clickjacking Vulnerabilities on Popular Sites》](http://seclab.stanford.edu/websec/framebusting/framebust.pdf)
+
+[OWASP的Clickjacking资料](https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet)
