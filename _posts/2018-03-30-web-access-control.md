@@ -117,9 +117,11 @@ tags:
 * 框架上添加访问控制
     * 认证：在了解框架登录态维持方式（Cookie、Session）的情况下使用框架的登录态维持方式，不了解或者不想去了解就使用主流、生态圈广的框架，见[《Web访问控制——认证》](https://milkfr.github.io/%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/2018/04/16/web-access-contorl-authentication/)
     * 授权：推荐使用RBAC（Role-Based Access Control）模型建立访问控制，见[《Web访问控制——授权（RBAC模型）》](https://milkfr.github.io/%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/2018/04/08/web-access-control-authorization/)
+
 一种是业务逻辑复杂导致的疏漏
-    * 多见于水平权限漏洞，不同场景不同
-    * 及时修改，可考虑在DAO层添加数据访问的控制
+
+* 多见于水平权限漏洞，不同场景不同
+* 及时修改，可考虑在DAO层添加数据访问的控制
 
 ### 0x04 深入攻防
 还是从认证和授权两个方面来看
