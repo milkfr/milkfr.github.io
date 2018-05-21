@@ -24,55 +24,57 @@ tags:
 `macroItesms`是发包前请求的页面列表，一般最后一个为我们需要的页面
 
 ```
-if (macroItems == null) return;
-// in general, there is only one
-final byte[] finalResponse = macroItems[macroItems.length - 1].getResponse();
+public void performAction(IHttpRequestResponse currentRequest, IHttpRequestResponse[] macroItems) {
+	if (macroItems == null) return;
+	// in general, there is only one
+	final byte[] finalResponse = macroItems[macroItems.length - 1].getResponse();
 
-if (finalResponse == null) return;
+	if (finalResponse == null) return;
 
-String session = null;
-String csrfToken = null;
-IResponseInfo responseInfo = helpers.analyzeResponse(finalResponse);
+	String session = null;
+	String csrfToken = null;
+	IResponseInfo responseInfo = helpers.analyzeResponse(finalResponse);
 
-// get session info
-final List<String> headers = responseInfo.getHeaders();
-for (String header : headers) {
-    if (header.startsWith("Set-Cookie")) {
-        String pattern = "session=(.*?);";
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(header);
-        if (m.find()) {
-            stderr.println("Found session: " + m.group(1));
-            session = m.group(1);
-        }
-    }
+	// get session info
+	final List<String> headers = responseInfo.getHeaders();
+	for (String header : headers) {
+		if (header.startsWith("Set-Cookie")) {
+			String pattern = "session=(.*?);";
+			Pattern p = Pattern.compile(pattern);
+			Matcher m = p.matcher(header);
+			if (m.find()) {
+				stderr.println("Found session: " + m.group(1));
+				session = m.group(1);
+			}
+		}
+	}
+
+	if (session == null) return;
+
+	int responseBodyOffset = helpers.analyzeResponse(finalResponse).getBodyOffset();
+	String responseBody = new String(Arrays.copyOfRange(finalResponse, responseBodyOffset, finalResponse.length));
+	String pattern = "<input name=\"csrf_token\" value=\"([a-zA-Z0-9]{40}\\.[a-zA-Z0-9=]{16}\\.[a-zA-Z0-9-_]{40})\" type=\"hidden\"/>";
+	Pattern p = Pattern.compile(pattern);
+	Matcher m = p.matcher(responseBody);
+	if (m.find()) {
+		stderr.println("Found csrf_token: " + m.group(1));
+		csrfToken = m.group(1);
+	}
+
+	if (csrfToken == null) return;
+
+	byte[] request = currentRequest.getRequest();
+
+	List<IParameter> parameters = helpers.analyzeRequest(request).getParameters();
+	for (IParameter parameter : parameters) {
+		if (parameter.getType() == IParameter.PARAM_BODY && parameter.getName().equals(CSRF_TOKEN_KEY)) {
+			request = helpers.updateParameter(request, helpers.buildParameter(CSRF_TOKEN_KEY, csrfToken, IParameter.PARAM_BODY));
+		} else if (parameter.getType() == IParameter.PARAM_COOKIE && parameter.getName().equals(SESSION_KEY) ) {
+			request = helpers.updateParameter(request, helpers.buildParameter(SESSION_KEY, session, IParameter.PARAM_COOKIE));
+		}
+	}
+	currentRequest.setRequest(request);
 }
-
-if (session == null) return;
-
-int responseBodyOffset = helpers.analyzeResponse(finalResponse).getBodyOffset();
-String responseBody = new String(Arrays.copyOfRange(finalResponse, responseBodyOffset, finalResponse.length));
-String pattern = "<input name=\"csrf_token\" value=\"([a-zA-Z0-9]{40}\\.[a-zA-Z0-9=]{16}\\.[a-zA-Z0-9-_]{40})\" type=\"hidden\"/>";
-Pattern p = Pattern.compile(pattern);
-Matcher m = p.matcher(responseBody);
-if (m.find()) {
-    stderr.println("Found csrf_token: " + m.group(1));
-    csrfToken = m.group(1);
-}
-
-if (csrfToken == null) return;
-
-byte[] request = currentRequest.getRequest();
-
-List<IParameter> parameters = helpers.analyzeRequest(request).getParameters();
-for (IParameter parameter : parameters) {
-    if (parameter.getType() == IParameter.PARAM_BODY && parameter.getName().equals(CSRF_TOKEN_KEY)) {
-        request = helpers.updateParameter(request, helpers.buildParameter(CSRF_TOKEN_KEY, csrfToken, IParameter.PARAM_BODY));
-    } else if (parameter.getType() == IParameter.PARAM_COOKIE && parameter.getName().equals(SESSION_KEY) ) {
-        request = helpers.updateParameter(request, helpers.buildParameter(SESSION_KEY, session, IParameter.PARAM_COOKIE));
-    }
-}
-currentRequest.setRequest(request);
 ```
 
 代码从`macroItems`获取可以获得CSRF Token的页面，并从中用正则提取出CSRF Token，生成新的返回包
