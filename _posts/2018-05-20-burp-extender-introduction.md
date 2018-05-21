@@ -53,6 +53,11 @@ Burp插件很多是Java的`awt, swing`的图形界面编写，这些图形界面
 #### 功能区分
 Project Options中的session handling rule可以满足大部分的编解码，Token绕过，改包时参数重签名重加密等方面的，没必要在Intruder和Scanner提供的接口中重新编写这些功能，考虑清楚需要
 
+#### 靶机搭建
+也是为了方便Debug，自己搭建靶机，写一些和实际需要相同的功能，在靶机上测试，方便调整
+
+[vuln-web](https://github.com/milkfr/burp-extenders/tree/master/vuln-web)上有我自己搭的靶机
+
 ### 0x05 编写的部分常用插件
 #### Logger
 * 分析Burp工具出入包的插件，捕获出入的HTTP/S
