@@ -63,25 +63,25 @@ Project Options中的session handling rule可以满足大部分的编解码，To
 * 分析Burp工具出入包的插件，捕获出入的HTTP/S
 * 可以在使用中插件Scanner发出的Payload，用来收集或者补全
 * 可以添加和删除重要的包到工具Tab中，方便查看
+* [详细说明](https://milkfr.github.io/burp%20suite/2018/05/21/burp-extender-logger/)
 
 #### session-handling-rule-csrf-token
-* 绕过CSRF Token
-* 每次改包请求发出前，首先请求带有CSRF Token的页面，解析出CSRF Token，替换包中的Token，避免CSRF Token问题导致的改包失效
+* 在Burp发送请求前先请求一次页面中带有CSRF Token的接口，解析其中的CSRF Token，替换掉包中已经过期的信息，从而绕过CSRF Token的限制，提高扫描效果因CSRF Token造成的准确率下降
+* 一般CSRF Token是中间件，因此可以从一个页面解析的Token可以在其他页面使用，当然也需要根据实际情况修改解析策略
+* [详细说明](https://milkfr.github.io/burp%20suite/2018/05/21/session-handling-rule-csrf-token/)
 
 #### session-handling-rule-sign
 * 改包后重签名
 * 需要知道签名的算法
 * 在对参数进行修改之后，重新签名，避免签名问题导致的改包失效
+* [详细说明](https://milkfr.github.io/burp%20suite/2018/05/21/session-handling-rule-sign/)
 
 #### editor-tab-codec
 * 在MessageEditorTab中对参数编解码（加解密）的插件
 * 需要知道编解码（加解密）算法
 * 在Proxy模块中查看解码（解密）信息
 * 在Repeater中修改Payload值可以直接编码（加密）信息
-
-#### intruder-payload-processor
-* Intruder功能的payload处理方法
-* 与session-handling-rule的能力基本相同，可以作为Intruder独有的功能模块，单独加载
+* [详细说明](https://milkfr.github.io/burp%20suite/2018/05/21/editor-tab-codec)
 
 #### scanner-rule
 * Scanner 扫描规则制定
@@ -89,3 +89,4 @@ Project Options中的session handling rule可以满足大部分的编解码，To
 * 可以定制Payload的插入点
 * 可以定制Payload的编码修改
 * 可以定制扫描结果的报告信息
+* [详细说明](https://milkfr.github.io/burp%20suite/2018/05/21/scanner-rule/)

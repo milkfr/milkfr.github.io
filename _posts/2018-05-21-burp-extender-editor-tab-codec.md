@@ -10,6 +10,10 @@ tags:
 ### 0x00 功能介绍
 编解码（加解密）结果在Message Editor Tab中显示的插件
 
+* 需要知道编解码（加解密）算法
+* 在Proxy模块中查看解码（解密）信息
+* 在Repeater中修改Payload值可以直接编码（加密）信息
+
 ![1](https://milkfr.github.io/assets/images/posts/2018-05-21-burp-extender-editor-tab-codec/1.png)
 
 如图，Repeater页面就有一个Message Editor Tab，原本有Row、Params等Tab，插件为它新建了一个叫做Codec的Tab，点进去后就可以看到Codec的Tab对请求的参数进行分类显示，并对password参数用Base64解码显示到Decode上
