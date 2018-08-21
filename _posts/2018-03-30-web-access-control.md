@@ -5,6 +5,7 @@ categories:
  - 漏洞研究
 tags:
  - access control
+ - 渗透测试
 ---
 
 ### 0x00 概述
