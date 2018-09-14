@@ -6,6 +6,7 @@ categories:
 tags:
  - ES Stack
  - Elasticsearch
+ - 技术栈
 ---
 
 ### Elasticsearch
@@ -56,22 +57,6 @@ POST /accounts/person/1
     "lastname": "Doe",
     "job_description": "Systems administrator and Linux specialit"
 }
-
-# Response
-{
-  "_index": "accounts",  # Index名
-  "_type": "person",  # Type名
-  "_id": "1",   # ID名，不提交会自动生成
-  "_version": 1,
-  "result": "created",
-  "_shards": {
-    "total": 2,
-    "successful": 2,
-    "failed": 0
-  },
-  "_seq_no": 0,
-  "_primary_term": 1
-}
 ```
 
 * 批量创建文档API
@@ -89,20 +74,6 @@ POST _bulk
 ```
 # Request
 GET /accounts/person/1
-
-# Response
-{
-  "_index": "accounts",
-  "_type": "person",
-  "_id": "1",
-  "_version": 1,
-  "found": true,
-  "_source": {
-    "name": "John",
-    "lastname": "Doe",
-    "job_description": "Systems administrator and Linux specialit"
-  }
-}
 ```
 
 * 批量查询
@@ -120,44 +91,12 @@ POST /accounts/person/1/_update
         "job_description": "Systems administrator and Linux specialist"
     }
 }
-
-# Response
-{
-  "_index": "accounts",
-  "_type": "person",
-  "_id": "1",
-  "_version": 2,
-  "result": "updated",
-  "_shards": {
-    "total": 2,
-    "successful": 2,
-    "failed": 0
-  },
-  "_seq_no": 1,
-  "_primary_term": 1
-}
 ```
 
 * Delete 删除文档
 ```
 # Request
 DELETE /accounts/person/1
-
-# Response
-{
-  "_index": "accounts",
-  "_type": "person",
-  "_id": "1",
-  "_version": 5,
-  "result": "deleted",
-  "_shards": {
-    "total": 2,
-    "successful": 2,
-    "failed": 0
-  },
-  "_seq_no": 4,
-  "_primary_term": 1
-}
 ```
 
 #### Elasticsearch查询简介
