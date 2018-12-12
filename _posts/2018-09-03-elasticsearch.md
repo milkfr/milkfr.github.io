@@ -2,10 +2,9 @@
 title: Elasticsearch
 description: Elasticsearch
 categories:
- - 扫描器
+ - 技术栈
 tags:
  - ES Stack
- - Elasticsearch
  - 技术栈
 ---
 

@@ -2,7 +2,7 @@
 title: Brup Suite插件编写
 description: 最近Burp Suite插件编写的一些记录
 categories:
- - Burp Suite
+ - 渗透工具
 tags:
  - Burp Suite
  - 渗透工具
@@ -14,8 +14,8 @@ tags:
 ### 0x01 IDEA环境搭建
 * 新建Java项目，选择SDK，一路next
 * Burp Suite的Extender->APIs->Save interface files到src中，会新建burp文件夹
-* Open Module Settings->Artifacts->+->JAR->Empty->改名->+->Module Ouput->选择output
-* 新建BurpExtender.java文件，继承registerExtenderCallbacks，开始写内容
+* Open Module Settings->Artifacts->+->JAR->From modules with dependencies...->改名->+->Module Ouput->选择output
+* 新建BurpExtender.java文件，继承registerExtenderCallbacks，开始写内容，如果存在第三方包，在src目录边上建立lib目录，将jar放入（因为我不是专业写Java，对一些包管理不清楚，所以用这种方式）
 * 写完以后打包jar包，Build->Build Artifacts
 * Burp Suite的Extender导入jar包
 
@@ -40,8 +40,6 @@ tags:
 * 其他功能API：`IBurpCollaboratorClientContext`，`IBurpCollaboratorInteraction`（这两个接口用于外部服务器交互），`IHttpListener`（监听所有HTTP包），`IScopeChangeListener`（Burp作用域限定），`ISessionHandlingAction`（Project options中的Sessions设置接口），`ITempFile`（临时文件的Buffer缓存）
 * 被弃用的API：`IMenuItemHandler`
 
-各个API的使用方式可以见[资料1]()[资料2]()
-
 ### 0x04 部分个人插件编写心得
 #### Debug麻烦的问题
 Burp Suite插件需要编译成jar包，然后导入到Burp Suite中才可以运行使用，存在编写Debug比较麻烦的问题
@@ -60,8 +58,8 @@ Project Options中的session handling rule可以满足大部分的编解码，To
 [vuln-web](https://github.com/milkfr/burp-extenders/tree/master/vuln-web)上有我自己搭的靶机
 
 ### 0x05 编写的部分常用插件
-#### Logger
-* 分析Burp工具出入包的插件，捕获出入的HTTP/S
+#### logger
+* 官网例子改一改，分析Burp工具出入包的插件，捕获出入的HTTP/S
 * 可以在使用中插件Scanner发出的Payload，用来收集或者补全
 * 可以添加和删除重要的包到工具Tab中，方便查看
 * [详细说明](https://milkfr.github.io/burp%20suite/2018/05/21/burp-extender-logger/)

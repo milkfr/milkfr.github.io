@@ -2,7 +2,7 @@
 title: Burp Suite插件编写logger
 description: 官网Logger Demo的拓展，收集包和Burp Scanner的Payload
 categories:
- - Burp Suite
+ - 渗透工具
 tags:
  - Burp Suite
  - 渗透工具

@@ -5,7 +5,7 @@ categories:
  - 漏洞研究
 tags:
  - SQL Injection
- - 渗透测试
+ - 漏洞研究
 ---
 
 ### 0x00 概述

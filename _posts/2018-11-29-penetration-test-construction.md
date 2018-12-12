@@ -2,9 +2,9 @@
 title: 渗透测试建设
 description: 持续更新我的企业安全渗透测试建设经验
 categories:
- - gitcheck
+ - 总结 
 tags:
- - 渗透测试
+ - 总结 
  - 安全建设
 ---
 

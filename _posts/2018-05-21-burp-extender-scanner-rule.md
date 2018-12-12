@@ -2,7 +2,7 @@
 title: Burp Suite插件编写scanner-rule
 description: 自定义Burp Suite的Scanner规则
 categories:
- - Burp Suite
+ - 渗透工具
 tags:
  - Burp Suite
  - 渗透工具

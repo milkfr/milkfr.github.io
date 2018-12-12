@@ -2,7 +2,7 @@
 title: Burp Suite插件编写editor-tab-codec
 description: 编解码（加解密）结果在Message Editor Tab中显示的插件
 categories:
- - Burp Suite
+ - 渗透工具
 tags:
  - Burp Suite
  - 渗透工具

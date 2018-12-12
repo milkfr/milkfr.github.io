@@ -2,7 +2,7 @@
 title: Burp Suite插件编写session-handling-rule-sign
 description: 改包时重签名的session-handling-rule插件
 categories:
- - Burp Suite
+ - 渗透工具
 tags:
  - Burp Suite
  - 渗透工具

@@ -2,7 +2,7 @@
 title: Burp Suite插件编写session-handling-rule-csrf-token
 description: 绕过CSRF Token等session-handling-rule插件
 categories:
- - Burp Suite
+ - 渗透工具
 tags:
  - Burp Suite
  - 渗透工具
