@@ -22,7 +22,7 @@ tags:
 
 * OS: Linxu、Windows
 * 服务中间件：Nginx、Apache、Redis、RabbitMQ、SSH、MySQL等
-* 靶机：WebGoat、DVWA、sqli-labs和根据需要检查的漏洞自己搭建的应用
+* 靶机：WebGoat、DVWA、sqli-labs和根据需要检查的漏洞自己搭建的应用、[vulhub](https://github.com/vulhub/vulhub)、[vulapps](https://github.com/Medicean/VulApps)
 * 工具：
     * 服务扫描：masscan、nmap
     * 主机扫描：Nessus、Nexpose、msf
