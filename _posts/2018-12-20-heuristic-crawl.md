@@ -12,6 +12,13 @@ tags:
 ### 基础知识
 启发式爬虫：基于历史经验和已知场景，构造并实现规则的爬虫
 
+主要的点：
+
+* hook所有的网络请求
+* 静态页面链接分析，如href、frame等等
+* javascript动态解析，触发click等操作
+* 自动分析表单幷提交
+
 #### BOM(Browser Object Model)
 #### DOM(Document Object Model)
 #### CDP(Chrome DevTools Protocol)
@@ -280,7 +287,119 @@ Node added: 1 <a href=​"click_link.php?id=2">​click_link.php?id=2​</a>​
 
 ### 获取请求
 #### 获取普通请求
+```
+#!/usr/bin/env python3
+
+import requests
+from bs4 import BeautifulSoup
+resp = requests.get("https://www.seebug.org")
+soup = BeautifulSoup(resp.content, "lxml")
+resources = {
+    "anchor": (soup.find_all('a'), "href"),
+    "iframe": (soup.find_all("iframe"), "src"),
+    "frame": (soup.find_all("frame"), "src"),
+    "img": (soup.find_all("img"), "href"),
+    "link": (soup.find_all("link"), "href"),
+    "script": (soup.find_all("script"), "src"),
+    "form": (soup.find_all("form"), "action"),
+}
+print(resources)
+```
+
+```
+#! /usr/bin/env python3
+
+import asyncio
+from pyppeteer import launch
+async def main():
+    browser = await launch()
+    page = await browser.newPage()
+    await page.goto("http://www.seebug.org")
+    await page.waitFor("body" > div.footer-up")
+    urls = await page.evalute("""() => {
+        var urls = new Array();
+        var atags = document.getElementsByTagName('a');
+        for (let i = 0; i < atags.length; i++) {
+            if (atags[i].getAttribute("href")) {
+                urls[i] = atags[i].getAttribute("href")
+            }
+        }
+        return urls;
+    }""")
+```
 
 #### 获取Form表单请求
+```
+for (let i = 0; i < document.forms.length; i++) {
+    form = document.forms[i];
+    console.log(form.method, form.action)
+    for (var j = 0; j < form.length; i++) {
+        input = form[j];
+        console.log(input.nodeName, input.type, input.name);
+    }
+}
+```
 
 #### 获取AJAX请求
+hook住console然后启用请求拦截过滤处理都方式比较好
+```
+await page.setRequestInterception(true);
+page.on("request", request => {
+    console.log(request.url());
+    request.continue();
+});
+```
+
+也可以劫持原⽣类 XMLHttpRequest
+```
+XMLHttpRequest.prototype.__originalOpen = XMLHttpRequest.prototype.open;
+XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+    // hook code
+    return this.__originalOpen(method, url, async, user, password);
+}
+XMLHttpRequest.prototype.__originalSend = XMLHttpRequest.prototype.send;
+XMLHttpRequest.prototype.send = function(data) {
+    // hook code
+    return this.__originalSend(data);
+}
+```
+
+### 其他
+#### Cookie等头部设置
+
+#### 保持Session独立
+```
+var context = await browser.createIncognitoBrowserContext();
+var page = await context.newPage();
+await page.goto("http://mail.aliyun.com");
+var cookies = await page.cookies();
+console.log(cookies);
+await page.close();
+await context.close();
+```
+
+#### 代理
+
+
+#### 去重
+```
+import ast
+def var(x):
+    try:
+        if not isinstance(x, str):
+            x = str(x)
+        return ast.literal_eval(x)
+    except:
+        try:
+            x = x.replace('\'', "\\'")
+            return ast.literal_eval("'{0}'".format(x))
+        except:
+            return "xz"
+
+In [1]: type(var("123"))
+out[1]: int
+
+In [2]: type(var("news"))
+Out[2]: str
+```
+
