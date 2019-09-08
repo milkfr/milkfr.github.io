@@ -2,10 +2,9 @@
 title: Web访问控制
 description: Web访问控制说明
 categories:
- - 漏洞研究
+ - 通用漏洞
 tags:
- - access control
- - 漏洞研究
+ - 访问控制
 ---
 
 ### 0x00 概述

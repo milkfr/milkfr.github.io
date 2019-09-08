@@ -2,10 +2,9 @@
 title: SQL Injection
 description: SQL注入漏洞简介与防御方式
 categories:
- - 漏洞研究
+ - 通用漏洞
 tags:
  - SQL Injection
- - 漏洞研究
 ---
 
 ### 0x00 概述

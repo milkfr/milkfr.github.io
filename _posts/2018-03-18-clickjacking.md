@@ -2,10 +2,9 @@
 title: 点击劫持
 description: 点击劫持漏洞攻防
 categories:
- - 漏洞研究
+ - 通用漏洞 
 tags:
  - clickjacking
- - 漏洞研究
 ---
 
 ### 0x00 概述

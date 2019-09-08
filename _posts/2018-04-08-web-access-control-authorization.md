@@ -2,10 +2,9 @@
 title: Web访问控制——授权（RBAC模型）
 description: Web访问控制授权部分，RBAC模型
 categories:
- - 漏洞研究
+ - 通用漏洞
 tags:
- - access control
- - 漏洞研究
+ - 访问控制
 ---
 
 ### 0x00 概述
