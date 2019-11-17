@@ -5,7 +5,7 @@ categories:
  - Java Web
 tags:
  - Java Web
---
+---
 
 ### 0x00 Servlet规范和Servlet容器
 浏览器发给服务端的是一个HTTP格式的请求，HTTP服务器收到这个请求后，需要调用服务端程序来处理，服务端程序就是写的Java类
