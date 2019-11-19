@@ -90,6 +90,11 @@ $ redis-cli
 (error) NOAUTH Authentication required.
 ```
 
+### nginx
+根据[官方文档](http://nginx.org/en/linux_packages.html#Ubuntu)安装nginx
+
+删除`/etc/nginx/conf.d/default.conf`
+
 #### jetbrains全家桶
 官网安装ToolBox，傻瓜安装，我觉得它家产品真好
 
