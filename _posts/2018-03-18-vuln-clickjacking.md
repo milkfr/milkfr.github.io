@@ -4,7 +4,7 @@ description: 点击劫持漏洞攻防
 categories:
  - 通用漏洞 
 tags:
- - clickjacking
+ - 通用漏洞
 ---
 
 ### 0x00 概述

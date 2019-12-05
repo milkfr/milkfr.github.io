@@ -4,7 +4,7 @@ description: SQL注入漏洞简介与防御方式
 categories:
  - 通用漏洞
 tags:
- - SQL Injection
+ - 通用漏洞
 ---
 
 ### 0x00 概述

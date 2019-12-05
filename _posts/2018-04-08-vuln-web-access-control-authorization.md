@@ -4,7 +4,7 @@ description: Web访问控制授权部分，RBAC模型
 categories:
  - 通用漏洞
 tags:
- - 访问控制
+ - 通用漏洞
 ---
 
 ### 0x00 概述

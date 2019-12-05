@@ -4,7 +4,7 @@ description: Web访问控制说明
 categories:
  - 通用漏洞
 tags:
- - 访问控制
+ - 通用漏洞
 ---
 
 ### 0x00 概述
