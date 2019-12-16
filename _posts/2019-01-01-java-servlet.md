@@ -1,10 +1,10 @@
 ---
-title: Java Web研习一：Servlet详解
-description: Java Web研习一：Servlet详解
+title: Servlet详解
+description: Servlet详解
 categories:
- - Java Web
+ - Java
 tags:
- - Java Web
+ - Java
 ---
 
 ### 0x00 Servlet规范和Servlet容器
@@ -16,7 +16,7 @@ tags:
 
 如下图比较清晰
 
-![0-1](https://milkfr.github.io/assets/images/posts/2019-01-01-javaweb-servlet/0-1.png)
+![0-1](https://milkfr.github.io/assets/images/posts/2019-01-01-java-servlet/0-1.png)
 
 HTTP服务器不直接调用业务类，而把请求交给容器来处理，容器通过Servlet接口调用业务类，因此，Servlet接口和Servlet容器达到了HTTP服务器与业务类解耦的目的
 
@@ -210,7 +210,7 @@ ServletRequest用来封装请求信息，ServletResponse用来封装响应信息
 #### Servlet的工作流程
 如下图所示
 
-![3-1](https://milkfr.github.io/assets/images/posts/2019-01-01-javaweb-servlet/3-1.png)
+![3-1](https://milkfr.github.io/assets/images/posts/2019-01-01-java-servlet/3-1.png)
 
 Tomcat包含HTTP服务器和Servlet容器的功能
 

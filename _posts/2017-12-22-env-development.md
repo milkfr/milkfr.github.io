@@ -35,7 +35,7 @@ $ $ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%C
 #### zsh
 根据[Installing-ZSH](https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH)的说明安装zsh，并将默认shell切换为zsh
 
-根据oh-my-zsh的[README](https://github.com/robbyrussell/oh-my-zsh)的说明安张oh-my-zsh
+根据oh-my-zsh的[README](https://github.com/robbyrussell/oh-my-zsh)的说明安装oh-my-zsh
 
 修改`.zshrc`的`ZSH_THEME`变量为`ys`，修改主题
 
@@ -90,14 +90,24 @@ $ redis-cli
 (error) NOAUTH Authentication required.
 ```
 
-### nginx
+#### nginx
 根据[官方文档](http://nginx.org/en/linux_packages.html#Ubuntu)安装nginx
 
 删除`/etc/nginx/conf.d/default.conf`
 
+#### docker
+根据[官方文档](https://docs.docker.com/install/linux/docker-ce/ubuntu/)安装docker
+
+根据[中科大源说明](https://lug.ustc.edu.cn/wiki/mirrors/help/docker)修改镜像地址
+
+重启docker`$ sudo service docker restart`，校验`$ sudo docker run hello-world`，如果不成功，可以修改上一条中的镜像地址为其他镜像地址尝试
+
+根据[说明](http://get.daocloud.io/#install-compose)，用root权限安张docker-compose
+
 #### jetbrains全家桶
 官网安装ToolBox，傻瓜安装，我觉得它家产品真好
 
+### Python环境
 #### pyenv
 根据[README](https://github.com/pyenv/pyenv)安装pyenv
 
@@ -116,6 +126,7 @@ $ pyenv local venv
 $ pyenv activate venv
 ```
 
+### Node环境
 #### nvm
 根据[README](https://github.com/nvm-sh/nvm)安装nvm
 
@@ -129,32 +140,35 @@ $ nvm use 10.15.3
 $ npm config set registry https://registry.npm.taobao.org  # npm改淘宝镜像
 ```
 
-#### Java
-创建javaenv目录
-
-[官网](https://www.oracle.com/technetwork/java/javase/downloads/index.html)下载JDK解压后放到javaenv目录下
+### Java环境
+#### JDK
+[官网](https://www.oracle.com/technetwork/java/javase/downloads/index.html)下载JDK解压后放到`~/javaenv`目录下
 
 配置Java环境变量
 ```
-export JAVA_HOME=~/javaenv/jdk1.8.0_231
+export JAVA_HOME=$HOME/javaenv/jdk1.8.0_231
 export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 export PATH=$JAVA_HOME/bin:$PATH
 ```
 
 重启shell后通过`java -version`和`javac -version`验证
 
+#### Tomcat
+[官网](https://tomcat.apache.org/)下载Tomcat解压后放到`~/javaenv`目录下
 
-[官网](https://tomcat.apache.org/)下载Tomcat解压后放到javaenv目录下
+配置`export CATALINA_HOME=$HOME/javaenv/apache-tomcat-9.0.27`
 
-编辑`path/conf/server.xml`，在`Connector`最后添加`URLEncoding=“UTF-8“`属性
+编辑`${CATALINA_HOME}/conf/server.xml`，在`Connector`最后添加`URLEncoding=“UTF-8“`属性
 
-运行`path/startup.sh`，访问本机8080端口可访问到管理台
+重启shell后运行`$CATALINA_HOME/startup.sh`，访问本机8080端口可访问到管理台
 
-#### docker
-根据[官方文档](https://docs.docker.com/install/linux/docker-ce/ubuntu/)安装docker
+#### maven
+[官网](http://maven.apache.org/)下载maven解压后放到`~/javaenv`目录下
 
-根据[中科大源说明](https://lug.ustc.edu.cn/wiki/mirrors/help/docker)修改镜像地址
+配置
+```
+export MAVEN_HOME=$HOME/javaenv/apache-maven-3.6.3
+export PATH=$MAVEN_HOME/bin:$PATH
+```
 
-重启docker`$ sudo service docker restart`，校验`$ sudo docker run hello-world`，如果不成功，可以修改上一条中的镜像地址为其他镜像地址尝试
-
-根据[说明](http://get.daocloud.io/#install-compose)，用root权限安张docker-compose
+重启shell后运行`mvn -v`校验
