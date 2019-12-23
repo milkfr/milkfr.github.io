@@ -1,6 +1,6 @@
 ---
-title: Servlet详解
-description: Servlet详解
+title: Servlet
+description: 从Demo开始的Servlet清晰认识
 categories:
  - Java
 tags:
@@ -22,7 +22,7 @@ HTTP服务器不直接调用业务类，而把请求交给容器来处理，容�
 
 Servlet接口和Servlet容器这一整套规范叫做Servlet规范，Tomcat、Jetty都按照Servlet规范实现了Servlet容器，同时它们具有HTTP服务器的功能，Java程序员要实现新功能，就是实现一个Servlet，并把它注册到Tomcat（Servlet容器）中，剩下的事情由Tomcat处理
 
-其实本身Servlet是不在乎通信协议是什么的，规范提供的GenericServlet抽象类，可以通过它实现Servlet，但是大多数Servlet是在HTTP环境中处理的，因此Servelt规范提供了HttpServlet继承GenericServlet，并加入HTTP特性，通过继承HttpServlet来实现Servlet，只需要重写doGet和doPost两个方法，下面通过示例简单演示一下
+其实本身Servlet是不在乎通信协议是什么的，规范提供的GenericServlet抽象类，可以通过它实现Servlet，但是大多数Servlet是在HTTP环境中处理的，因此Servlet规范提供了HttpServlet继承GenericServlet，并加入HTTP特性，通过继承HttpServlet来实现Servlet，只需要重写doGet和doPost两个方法，下面通过示例简单演示一下
 
 ### 0x01 编写和运行一个HttpServlet
 我们通过编写和运行一个HttpServlet，大致了解以下Servlet和Tomcat的配合，步骤如下
@@ -214,8 +214,8 @@ ServletRequest用来封装请求信息，ServletResponse用来封装响应信息
 
 Tomcat包含HTTP服务器和Servlet容器的功能
 
-1. 当用户请求某个资源时，HTTP服务器会用一个ServletRequest对象把客户的请求信息封装起来，然后调用Servelet容器的service方法
-2. Servelt容器拿到请求后，根据请求的URL和Servlet的映射关系，找到对应的Servlet
+1. 当用户请求某个资源时，HTTP服务器会用一个ServletRequest对象把客户的请求信息封装起来，然后调用Servlet容器的service方法
+2. Servlet容器拿到请求后，根据请求的URL和Servlet的映射关系，找到对应的Servlet
 3. 如果Servlet没有被加载，就用反射机制创建这个Servlet，并调用Servlet的init方法完成初始化
 4. 调用Servlet的service方法来处理请求
 5. 把ServletResponse对象返回给HTTP服务器，HTTP服务器会把响应发送给客户端

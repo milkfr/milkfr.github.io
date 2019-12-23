@@ -1,6 +1,6 @@
 ---
 title: 开发环境搭建
-description: 我的开发环境搭建
+description: 我的开发环境搭建，常用软件和工具
 categories:
  - 环境搭建
 tags:
