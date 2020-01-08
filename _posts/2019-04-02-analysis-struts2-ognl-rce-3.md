@@ -121,9 +121,9 @@ s2-003和s2-005开始PoC有了不同
 
 我们从maven仓库中下载xwork的包，比对一下，这里没有很精确，比对了2.0.0和2.0.7，可以发现allowStaticMethodAccess这个限制是增加的
 
-![1-1](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-strut2-ognl-rce-3/1-1.png)
+![1-1](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-struts2-ognl-rce-3/1-1.png)
 
-![1-2](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-strut2-ognl-rce-3/1-2.png)
+![1-2](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-struts2-ognl-rce-3/1-2.png)
 
 也就是说从某个版本开始，官方意识到OGNL执行代码的问题，增加了一个SecurityMemberAccess类，进行一些限制，不出意外是s2-001修复的sturts2的2.0.9版本，xwork2.0.4版本
 
@@ -149,7 +149,7 @@ public class SecurityMemberAccess extends DefaultMemberAccess {
 
 所以后面s2-007，s2-009，s2-012，s-013，s2-014，s2-015出现了一堆漏洞，基本上都可以用类似`${#_memberAccess["allowStaticMethodAccess"]=true,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('id').getInputStream())}`的方式，当然也存在特殊情况需要适配
 
-![1-3](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-strut2-ognl-rce-3/1-3.png)
+![1-3](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-struts2-ognl-rce-3/1-3.png)
 
 可以从上面看到，2.3.14.2版本后，将allowStaticMethodAccess设置成final后，就不能更改了，所以这些漏洞基本上升级到2.3.14.2就解决了
 

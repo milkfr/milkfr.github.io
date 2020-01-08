@@ -151,7 +151,7 @@ public class LoginAction extends ActionSupport {
 
 配置好tomcat用IDEA开始debug
 
-![0-1](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-1/0-1.png)
+![0-1](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-struts2-ognl-rce-1/0-1.png)
 
 #### 漏洞利用
 用户名框输入`%{1+1}`会被解析成2返回
