@@ -163,11 +163,11 @@ public class LoginAction extends ActionSupport {
 #### 漏洞利用
 发出请求，包体内容的age参数为`'+(#application)+'`
 
-![0-1](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/0-1.png)
+![0-1](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/0-1.png)
 
 返回内容为
 
-![0-2](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/0-2.png)
+![0-2](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/0-2.png)
 
 返回的内容是application这个对象在ognl上下文环境中的值，如果我们和s2-001一样，输入`'+(#1+1)+'`，返回值就变成了11，字符串拼接了
 
@@ -181,7 +181,7 @@ public class LoginAction extends ActionSupport {
 
 调用的堆栈信息如下
 
-![1-1](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/1-1.png)
+![1-1](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/1-1.png)
 
 ```
 if (this.interceptors.hasNext()) {
@@ -217,28 +217,28 @@ if (this.interceptors.hasNext()) {
 #### JSP定位
 通过jsp的生成过程debug，也就是和s2-001一样的过程，调用栈如下
 
-![1-5](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/1-5.png)
+![1-5](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/1-5.png)
 
 这里我们将经过validation的age和未经过的name进行比较，同样输入他们的值为`'+(#application)+'`，可以发现`stack.findValue`后它们的值是不一样的
 
-![1-6](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/1-6.png)
+![1-6](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/1-6.png)
 
-![1-7](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/1-7.png)
+![1-7](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/1-7.png)
 
 继续跟进`stack.findValue`
 
-![1-8](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/1-8.png)
+![1-8](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/1-8.png)
 
 到了这里，调用过程中存在一个compile函数，去掉了引号，变成了一个OGNL表达式，这里就能发现为什么多了个引号？
 
 #### 再谈定位ConversionErrorIntercept
 我们跟进ConversionErrorInterceptor的intercept方法
 
-![1-2](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/1-2.png)
+![1-2](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/1-2.png)
 
-![1-3](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/1-3.png)
+![1-3](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/1-3.png)
 
-![1-4](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-2/1-4.png)
+![1-4](https://milkfr.github.io/assets/images/posts/2019-03-22-analysis-strut2-ognl-rce-2/1-4.png)
 
 跟进一下可以发现，这里做了几个操作
 

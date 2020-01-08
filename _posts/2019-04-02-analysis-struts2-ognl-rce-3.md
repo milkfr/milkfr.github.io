@@ -121,9 +121,9 @@ s2-003和s2-005开始PoC有了不同
 
 我们从maven仓库中下载xwork的包，比对一下，这里没有很精确，比对了2.0.0和2.0.7，可以发现allowStaticMethodAccess这个限制是增加的
 
-![1-1](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-3/1-1.png)
+![1-1](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-strut2-ognl-rce-3/1-1.png)
 
-![1-2](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-3/1-2.png)
+![1-2](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-strut2-ognl-rce-3/1-2.png)
 
 也就是说从某个版本开始，官方意识到OGNL执行代码的问题，增加了一个SecurityMemberAccess类，进行一些限制，不出意外是s2-001修复的sturts2的2.0.9版本，xwork2.0.4版本
 
@@ -149,14 +149,12 @@ public class SecurityMemberAccess extends DefaultMemberAccess {
 
 所以后面s2-007，s2-009，s2-012，s-013，s2-014，s2-015出现了一堆漏洞，基本上都可以用类似`${#_memberAccess["allowStaticMethodAccess"]=true,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('id').getInputStream())}`的方式，当然也存在特殊情况需要适配
 
-![1-3](https://milkfr.github.io/assets/images/posts/2019-03-01-analysis-strut2-ognl-rce-3/1-3.png)
+![1-3](https://milkfr.github.io/assets/images/posts/2019-04-02-analysis-strut2-ognl-rce-3/1-3.png)
 
 可以从上面看到，2.3.14.2版本后，将allowStaticMethodAccess设置成final后，就不能更改了，所以这些漏洞基本上升级到2.3.14.2就解决了
 
-不能更改allowStaticMethodAccess之后，可以通过
-
 #### 黑名单的增加
-再之后S2-016，S2-019，S2-029，S2-032，S2-033，S2-037
+再之后S2-016，S2-019，S2-029，S2-032，S2-033，S2-037...
 
 ```
 #a=new java.lang.ProcessBuilder(new java.lang.String[]{"netstat","-an"}).start()
@@ -168,7 +166,7 @@ public class SecurityMemberAccess extends DefaultMemberAccess {
 
 在上面将allowStaticMethodAccess置为final之后，不可以通过设置allowStaticMethodAccess来赋值
 
-于是就出现了上面两种新的方法，
+于是就出现了上面三种新的方法，
 
 第一种是通过构造函数访问公共函数，比较好理解
 
@@ -202,7 +200,7 @@ public class SecurityMemberAccess extends DefaultMemberAccess {
 
 原因是struts2需要灵活以及它不是默认安全的，我想一般来说安全一定会限制灵活
 
-但是比如现代的前端框架，都默认对XSS进行了转义，如果不需要，需要在模版中使用过滤器，类似`{{ code | not_escape }}`，一般开发者不了解XSS，实现功能遇到问题看框架文档，就会增加XSS的安全意识
+但是比如现代的前端框架，都默认对XSS进行了转义，如果不需要，需要在模版中使用过滤器，类似`{ code | not_escape }`，一般开发者不了解XSS，实现功能遇到问题看框架文档，就会增加XSS的安全意识
 
 但是struts2不是，它默认不会在使用OGNL时使用强限制，除非用户指定才开放限制，它最开始是默认完全开放了OGNL，慢慢增加限制，对于不了解OGNL安全的开发者，很可能中招
 
@@ -260,7 +258,7 @@ public class LoginAction extends ActionSupport {
 
 灵活的背后就是漏洞，而且又没有默认安全，不管对应用开发者还是框架开发者都没有一个警惕
 
-然后就是对数据流转过程中限制不够，这些都是写框架和挖漏洞需要关注的点
+然后就是对数据流转过程中限制不够，这些都是写框架和挖漏洞需要关注的点，再有就是修复上不断被绕过，就是被发现的漏洞驱动，没有防范于未然了，当然这也和安全研究员确实比较厉害有关
 
 ### 参考文档
 https://xz.aliyun.com/t/4607
