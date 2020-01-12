@@ -2,9 +2,9 @@
 title: 如何理解Java的反射 
 description: 安全研究中，常常使用反射，可以绕过一些沙盒，所以要先理解Java的反射
 categories:
- - 漏洞研究
+ - 漏洞分析
 tags:
- - 漏洞研究
+ - 漏洞分析
 ---
 
 ### 0x00 什么是反射
@@ -22,7 +22,7 @@ public void execute(String className, String methodName) throws Exception {
 
 我不是Java开发，现在还是不太理解JVM的，但是这张图现在差不多能看懂就好
  
-![0-1](https://milkfr.github.io/assets/images/posts/2018-10-01-java-reflection/0-1.png)
+![0-1](https://milkfr.github.io/assets/images/posts/2018-10-01-analysis-java-reflection/0-1.png)
 
 `Object o = new Object();`
 
@@ -113,7 +113,7 @@ public class Test2 {
 }
 ```
 
-可以通过`Class.forName("test$test2")加载内部类
+可以通过`Class.forName("test$test2")`加载内部类
 
 ```
 package io.github.milkfr;
@@ -141,11 +141,11 @@ Test3.class
 #### 获取构造函数
 `class.newInstance`是调用这个类的无参构造函数，这个类没有重载，也就是说构造函数有参数就不能使用，同时，调用newInstance有个要求，就是类的构造函数不能是私有的
 
-![1-1](https://milkfr.github.io/assets/images/posts/2018-10-01-java-reflection/1-1.png)
+![1-1](https://milkfr.github.io/assets/images/posts/2018-10-01-analysis-java-reflection/1-1.png)
 
 我们调用`java.lang.Runtime`就会报错，所以单例模式的类都不能直接获取实例，但是一般单例模式的类都提供获取对象的方式，比如`java.lang.Runtime.getRuntime`，如下就可以执行，不会报错
 
-![1-2](https://milkfr.github.io/assets/images/posts/2018-10-01-java-reflection/1-2.png)
+![1-2](https://milkfr.github.io/assets/images/posts/2018-10-01-analysis-java-reflection/1-2.png)
 
 那么如果是一个类没有无参构造方法，也没有类似单例模式里的静态方法，如何实例化类对象
 
@@ -167,15 +167,15 @@ public ProcessBuilder(String... command) {
 
 我们可以使用，如下两个方式实现反射执行 
 
-![1-3](https://milkfr.github.io/assets/images/posts/2018-10-01-java-reflection/1-3.png)
+![1-3](https://milkfr.github.io/assets/images/posts/2018-10-01-analysis-java-reflection/1-3.png)
 
-![1-4](https://milkfr.github.io/assets/images/posts/2018-10-01-java-reflection/1-4.png)
+![1-4](https://milkfr.github.io/assets/images/posts/2018-10-01-analysis-java-reflection/1-4.png)
 
 通过`getConstructor`方法获取构造函数，可变长参数`string...`等于数组
 
 如果一个方法的构造方式是私有方法，如何执行
 
-![1-5](https://milkfr.github.io/assets/images/posts/2018-10-01-java-reflection/1-5.png)
+![1-5](https://milkfr.github.io/assets/images/posts/2018-10-01-analysis-java-reflection/1-5.png)
 
 `getDeclared`系列的方法获取当前类中"声明"的方法，包括私有的方法，但是不包括父类的，`getMethod`是获取公共方法，包括父类的
 
