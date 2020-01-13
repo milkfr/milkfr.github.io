@@ -1,5 +1,5 @@
 ---
-title: 如何理解Java反序列化
+title: 如何理解Java反序列化漏洞
 description: 和传统SQL注入、XSS这些Web漏洞不同的是，不管是开发还是安全人员都没办法一下理解反序列化漏洞，而它又往往能造成RCE漏洞，这里学习一下它
 categories:
  - 漏洞分析
