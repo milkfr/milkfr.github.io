@@ -115,7 +115,7 @@ Serving HTTP on 0.0.0.0 port 8081 (http://0.0.0.0:8081/) ...
 
 最后在IDEA运行Client.java
 
-![0-1](https://milkfr.github.io/assets/images/posts/2019-07-22-analysis-java-deserialize-fastjson/1-1.png)
+![0-1](https://milkfr.github.io/assets/images/posts/2019-07-22-analysis-java-deserialize-fastjson/0-1.png)
 
 可以看到8081端口的文件被读取了，然后客户端也执行了弹计算器的代码
 
