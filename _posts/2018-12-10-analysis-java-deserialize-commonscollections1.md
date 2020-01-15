@@ -1,5 +1,5 @@
 ---
-title: Apache Commons Collections 3.1反序列化分析
+title: Apache Commons Collections 3.1反序列化漏洞分析
 description: 各种反序列化介绍的文章中都用到这个例子，我看得云里雾里，自己也来搞一遍
 categories:
  - 漏洞分析
