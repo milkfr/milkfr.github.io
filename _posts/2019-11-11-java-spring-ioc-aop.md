@@ -319,3 +319,5 @@ IoC是一种可以帮助我们解耦各个业务对象间依赖关系的对象�
 [Spring基础(3)：复习](https://zhuanlan.zhihu.com/p/74807335)
 
 [Spring源码解析(1)：Bean容器](https://zhuanlan.zhihu.com/p/74832770)
+
+[SpringBoot启动原理解析](https://zhuanlan.zhihu.com/p/99205565)：这篇讲SpringBoot的注解成分和启动原理，从Spring过渡到SpringBoot很有必要
