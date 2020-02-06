@@ -2,10 +2,9 @@
 title: 启发式爬虫
 description: 根据猪猪侠在先知白帽大会的PPT写的爬虫
 categories:
- - 自研扫描器
+ - 安全开发 
 tags:
- - 爬虫
- - 自研扫描器
+ - 安全开发
 ---
 
 
@@ -365,8 +364,6 @@ XMLHttpRequest.prototype.send = function(data) {
 ```
 
 ### 其他
-#### Cookie等头部设置
-
 #### 保持Session独立
 ```
 var context = await browser.createIncognitoBrowserContext();
@@ -378,10 +375,9 @@ await page.close();
 await context.close();
 ```
 
-#### 代理
-
-
 #### 去重
+ast分析将一些特殊格式转化掉
+
 ```
 import ast
 def var(x):

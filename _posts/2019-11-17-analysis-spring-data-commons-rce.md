@@ -1,5 +1,5 @@
 ---
-title: Spring Data Rest 远程命令执行漏洞（CVE-2017-8046）分析
+title: Spring Data Commons 远程命令执行漏洞（CVE-2018-1273）分析
 description: 承接上两篇，学习了一下Spring框架以后，分析一下Spring的一些历史漏洞，这篇分析Spring Data Commons 远程命令执行漏洞（CVE-2018-1273）
 categories:
  - 漏洞分析
@@ -19,7 +19,7 @@ $ git reset --hard ec94079b8f2b1e66414f410d89003bd333fb6e7d  # 回退到一个�
 
 然后运行`web/example`目录下的Application，访问本机端口有返回即可，IDEA会显示一些错误，不影响运行
 
-brup发送请求包
+burp发送请求包
 
 ```
 POST /users HTTP/1.1
