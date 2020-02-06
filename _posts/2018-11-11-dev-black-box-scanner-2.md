@@ -1,5 +1,5 @@
 ---
-title: 黑盒扫描器自研之路（一）——侃侃功能
+title: 黑盒扫描器自研之路（二）——侃侃功能
 description: 我为公司开发的黑盒扫描器的发展历程
 categories:
  - 安全开发 
@@ -185,6 +185,30 @@ class BaseHandleTask(celery.Task, metaclass=abc.ABCMeta):
 这里将资产列表和PoC列表获取作为`prehandle`分离，并分离任务成功和失败的`callback`
 
 大部分的任务我们只需要写PoC，少数任务继承这个base类，做`prehandle`和`callback`的处理，这样结耦比之前脚本拉CMDB资产扫描的方式少了很多改代码的步骤
+
+比如redis未授权PoC
+
+```
+import socket
+
+
+def handle(target, option):
+    host = target.get('ip')
+    port = int(target.get('port'))
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        s.settimeout(3)
+        s.connect((host, port))
+        s.send(b'INFO\r\n')
+        if b'redis_version' in s.recv(1024):
+            return True
+    except Exception as e:
+        return str(e)
+    finally:
+        s.close()
+```
+
+PoC写的简单点，不依赖任何框架写到类，只用target和option两个参数，方便别人看懂，或者把PoC迁移或者改写到他自己喜欢的框架中
 
 #### CGI响应相似度识别减少多余扫描
 sqlmap有一个[响应相似度识别技术](https://paper.seebug.org/729/)
