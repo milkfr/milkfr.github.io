@@ -104,7 +104,7 @@ test.html的内容
 
 首先要知道，我们的目标就是要在页面加载前hook住`setTimeout`函数
 
-我们的pyppeteer的`page.evaluateOnNewDocument`失效了，所以我们要赚到pychrome这个库
+我们的pyppeteer的`page.evaluateOnNewDocument`失效了，所以我们要转到pychrome这个库
 
 #### 如何确定API
 我们首先肯定是要写几个Demo熟悉一下这迁移到的这个库pychrome
