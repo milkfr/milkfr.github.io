@@ -165,7 +165,7 @@ LSB算法基本步骤：
 可以发现，三个对比基本看不出差别，因此可以抵抗频度直方图的分析
 
 #### 改进的计算速度比对
-![3-6](https://milkfr.github.io/assets/images/posts/2020-02-01-other-lsb-improvement/3-6.png)
+![3-7](https://milkfr.github.io/assets/images/posts/2020-02-01-other-lsb-improvement/3-7.png)
 
 因此，我们的方案明显提高的原来方案的计算速度，且信息隐藏效果和原来方案一致（部分数据因为原方案未提供相关数据无法测试获得）
 
