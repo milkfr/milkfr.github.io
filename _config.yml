@@ -21,7 +21,7 @@ baseurl:
 permalink: pretty
 
 # Pagination
-paginate: 10
+paginate: 20
 #paginate_path: "/page:num/"
 #archive:
   #paginate: 10
@@ -122,7 +122,7 @@ menu:
   categories: /categories/
   about: /about/
   archives: /archives/
-  tags: /tags/
+  #tags: /tags/
   #sitemap: /sitemap.xml
   #commonweal: /404.html
 
