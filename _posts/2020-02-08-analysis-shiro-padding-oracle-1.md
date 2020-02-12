@@ -379,7 +379,7 @@ message = pad(payload)
 
 pad的lambda函数是将`payload+(payload%16)*char(16-payload%16)`，也即是16字节为1块，payload分成多块之后，差n就填充n个n
 
-![3-2](https://milkfr.github.io/assets/images/posts/2020-02-08-analysis-shiro-padding-oracle-1/3-2.png)
+![3-3](https://milkfr.github.io/assets/images/posts/2020-02-08-analysis-shiro-padding-oracle-1/3-3.png)
 
 如上图，差一个就填充一个1，差2个就填充2个2，差4个填充4个4，差8个填充8个8
 
