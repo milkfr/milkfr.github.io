@@ -249,8 +249,8 @@ sqlmap有一个[响应相似度识别技术](https://paper.seebug.org/729/)
     * CSRF，检查Token有效性，参数名过滤黑白名单，多因素验证排除
     * XSS，Chrome Headless的DOM XSS和存储型XSS检测
     * XXE，SSRF，反序列化漏洞内部DNSlog
-* 爬虫效果
     * 页面相似度算法增加页面变化提醒，改进验证码暴破等问题
+* 爬虫效果
     * 动态爬虫增加身份证、测试商户信息等爬取CGI更多
     * 白名单去除机制，页面相似度变化则白名单去除
     * 应用的CSRF Token和登录态定制化
